@@ -1,0 +1,7 @@
+id_transaction,montant,statut,date
+1,150.0,validé,2024-01-01
+2,200.0,validé,2024-01-02
+3,,en attente,2024-01-02
+4,99.5,validé,
+5,200.0,,2024-01-03
+6,-50.0,validé,2024-01-03
