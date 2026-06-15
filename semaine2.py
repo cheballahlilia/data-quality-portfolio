@@ -31,8 +31,21 @@ def verifier_statuts(df):
     print(anomalies)
     return anomalies
 
+def verifier_dates(df):
+    df["date"] = pd.to_datetime(df["date"], errors="coerce")
+    aujourdhui = pd.Timestamp.now()
+    
+    dates_invalides = df[df["date"].isnull()]
+    dates_futures = df[df["date"] > aujourdhui]
+    
+    print("\n=== Dates invalides ou manquantes ===")
+    print(dates_invalides)
+    print("\n=== Dates dans le futur ===")
+    print(dates_futures)
+    
+    return dates_invalides, dates_futures
 
-def exporter_rapport(df, nulls, negatifs, doublons, statuts):
+def exporter_rapport(df, nulls, negatifs, doublons, statuts, dates_invalides, dates_futures):
     maintenant = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     nom_fichier = f"rapport_qualite_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
     with open(nom_fichier, "w") as f:
@@ -44,7 +57,9 @@ def exporter_rapport(df, nulls, negatifs, doublons, statuts):
         f.write(f"\n\nNombre de montants négatifs : {len(negatifs)}\n")
         f.write(f"Nombre de doublons : {len(doublons)}\n")
         f.write(f"Nombre de statuts invalides : {len(statuts)}\n")
-    print("\nRapport exporté dans rapport_qualite.txt")
+        f.write(f"Nombre de dates invalides ou manquantes : {len(dates_invalides)}\n")
+        f.write(f"Nombre de dates dans le futur : {len(dates_futures)}\n")
+    print("\nRapport exporté dans", nom_fichier)
 
 def main():
     df = charger_donnees("transactions.csv")
@@ -52,7 +67,8 @@ def main():
     negatifs = verifier_montants_negatifs(df)
     doublons = verifier_doublons(df)
     statuts = verifier_statuts(df)
-    exporter_rapport(df, nulls, negatifs, doublons, statuts)
+    dates_invalides, dates_futures = verifier_dates(df)
+    exporter_rapport(df, nulls, negatifs, doublons, statuts, dates_invalides, dates_futures)
 
 if __name__ == "__main__":
     main()
