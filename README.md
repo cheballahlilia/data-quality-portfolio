@@ -7,17 +7,19 @@ Mini-framework de contrôle qualité de données développé en Python.
 Démontrer la mise en place de règles de contrôle qualité sur un jeu de données
 de transactions financières, avec génération de rapports horodatés et tests automatisés.
 
-## Structure du 
-data-quality-portfolio/
-├── checks/
-│   └── data_quality_checks.py   # Script principal de contrôle qualité
-├── tests/
-│   └── test_data_quality_checks.py  # Tests unitaires pytest
-├── data/
-│   └── transactions.csv         # Jeu de données de test
-├── reports/                     # Rapports générés (non versionnés)
-├── .gitignore
-└── README.
+## Structure du projet
+
+    data-quality-portfolio/
+    ├── checks/
+    │   └── data_quality_checks.py   
+    ├── tests/
+    │   └── test_data_quality_checks.py  
+    ├── data/
+    │   └── transactions.csv         
+    ├── reports/                     
+    ├── .gitignore
+    └── README.md
+    
 ## Contrôles implémentés
 
 - Détection des valeurs nulles par colonne
