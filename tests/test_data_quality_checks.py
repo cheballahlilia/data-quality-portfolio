@@ -1,4 +1,6 @@
-import pandas as pd
+import pandas as pd 
+import sys
+sys.path.insert(0, "checks")
 from data_quality_checks import verifier_montants_negatifs, verifier_doublons, verifier_statuts
 
 def test_verifier_montants_negatifs():

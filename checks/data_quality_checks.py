@@ -47,7 +47,7 @@ def verifier_dates(df):
 
 def exporter_rapport(df, nulls, negatifs, doublons, statuts, dates_invalides, dates_futures):
     maintenant = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    nom_fichier = f"rapport_qualite_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+    nom_fichier = f"reports/rapport_qualite_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
     with open(nom_fichier, "w") as f:
         f.write("=== RAPPORT DATA QUALITY ===\n\n")
         f.write(f"Date d'exécution : {maintenant}\n\n")
@@ -62,7 +62,7 @@ def exporter_rapport(df, nulls, negatifs, doublons, statuts, dates_invalides, da
     print("\nRapport exporté dans", nom_fichier)
 
 def main():
-    df = charger_donnees("transactions.csv")
+    df = charger_donnees("data/transactions.csv")
     nulls = verifier_nulls(df)
     negatifs = verifier_montants_negatifs(df)
     doublons = verifier_doublons(df)
