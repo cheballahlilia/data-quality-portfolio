@@ -27,4 +27,19 @@ validation_definition = context.validation_definitions.add(
     gx.ValidationDefinition(name="transactions_validation", data=batch_definition, suite=suite)
 )
 results = validation_definition.run(batch_parameters={"dataframe": df})
-print(results)
+# Affichage lisible du résultat
+print("\n=== RÉSULTAT GREAT EXPECTATIONS ===\n")
+print(f"Résultat global : {'✅ SUCCÈS' if results.success else '❌ ÉCHEC'}")
+print(f"Expectations évaluées : {results.statistics['evaluated_expectations']}")
+print(f"Réussies : {results.statistics['successful_expectations']}")
+print(f"Échouées : {results.statistics['unsuccessful_expectations']}")
+print(f"Taux de succès : {results.statistics['success_percent']}%")
+
+print("\n--- Détail par règle ---")
+for result in results.results:
+    statut = "✅ PASS" if result.success else "❌ FAIL"
+    colonne = result.expectation_config.kwargs.get("column", "")
+    type_test = result.expectation_config.type
+    print(f"{statut} | {colonne} | {type_test}")
+    if not result.success:
+        print(f"         → {result.result.get('unexpected_count', 0)} valeur(s) inattendue(s) ({result.result.get('unexpected_percent', 0):.1f}%)")
